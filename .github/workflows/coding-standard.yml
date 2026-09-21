@@ -1,0 +1,78 @@
+name: Coding Standard
+
+on:
+  pull_request:
+    branches:
+      - main
+#      - dev
+      - 'release/**'
+      - 'rc/**'
+  push:
+    branches:
+      - main
+
+
+permissions:
+  pull-requests: read
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer
+
+      - name: Get Composer Cache Directory
+        id: composer-cache-dir
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache PHP Dependencies
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-composer-7.4-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-7.4-
+
+      - name: Install PHP Dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest --no-interaction --ignore-platform-reqs
+
+      - name: PHPCS cache
+        uses: actions/cache@v4
+        with:
+          path: tests/cache
+          key: ${{ runner.os }}-phpcs-7.4-${{ hashFiles('plugin.php') }}
+          restore-keys: |
+            ${{ runner.os }}-phpcs-7.4-
+
+      - name: Determine changed files
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          list-files: shell
+          filters: |
+            php:
+              - 'includes/**/*.php'
+              - 'includes/**'
+
+      - name: Run PHPCS
+        if: steps.filter.outputs.php_files != ''
+        run: |
+          ./vendor/bin/phpcs --standard=phpcs.xml ${{ steps.filter.outputs.php_files }}
