@@ -12,17 +12,13 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "roots/wordpress-core-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "autoload": {
         "psr-4": {
             "RadiusTheme\\RadiusBoilerplate\\": "includes/"
         }
-    },
-    "extra": {
-        "wordpress-install-dir": "wordpress"
     },
     "require": {
         "php": ">=7.4"
@@ -31,8 +27,6 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
         "phpunit/phpunit": "^9.6",
-        "roots/wordpress-core-installer": "^1.100",
-        "roots/wordpress-full": "^6.4",
         "wp-coding-standards/wpcs": "^3.0",
         "wp-phpunit/wp-phpunit": "^6.4",
         "yoast/phpunit-polyfills": "^2.0"
