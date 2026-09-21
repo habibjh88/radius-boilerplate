@@ -1,7 +1,7 @@
 {
   "name": "radius-boilerplate",
   "version": "1.0.0",
-  "description": "WordPress plugin boilerplate — React 19 + Tailwind + shadcn/ui admin, built with @wordpress/scripts.",
+  "description": "WordPress plugin boilerplate \u2014 React 19 + Tailwind + shadcn/ui admin, built with @wordpress/scripts.",
   "author": "RadiusTheme",
   "license": "GPL-2.0-or-later",
   "private": true,
@@ -14,14 +14,7 @@
     "packages-update": "wp-scripts packages-update",
     "package": "bash ./bin/build-plugin-zip.sh",
     "i18n:pot": "wp i18n make-pot . languages/radius-boilerplate.pot --domain=radius-boilerplate --exclude=node_modules,build,vendor,tests",
-    "env:start": "wp-env start",
-    "env:stop": "wp-env stop",
-    "env:clean": "wp-env clean",
-    "env:destroy": "wp-env destroy",
-    "composer": "wp-env run cli --env-cwd=wp-content/plugins/radius-boilerplate composer",
-    "test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/radius-boilerplate/phpunit.xml.dist --verbose'",
-    "test:e2e": "wp-scripts test-playwright --config tests/e2e/playwright.config.ts",
-    "test:e2e:ui": "wp-scripts test-playwright --ui --config tests/e2e/playwright.config.ts"
+    "test:php": "./vendor/bin/phpunit -c phpunit.xml.dist"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -60,9 +53,6 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.49.0",
-    "@wordpress/e2e-test-utils-playwright": "^1.17.0",
-    "@wordpress/env": "^10.17.0",
     "@wordpress/scripts": "^30.7.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",

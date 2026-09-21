@@ -123,11 +123,6 @@ build
 production/*.zip
 production
 
-# Playwright E2E
-tests/e2e/.auth/
-test-results/
-playwright-report/
-
 # Translation editor backups (Loco/gettext) — never ship or commit these
 languages/*.po~
 languages/*-backup-*.po~

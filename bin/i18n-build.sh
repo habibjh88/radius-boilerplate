@@ -68,7 +68,7 @@ build_mo() {
 build_json() {
 	local locale="$1"
 	if ! has_wp_cli; then
-		log_warn "wp-cli not available; skipping JSON for ${locale}. Run inside wp-env to regenerate."
+		log_warn "wp-cli not available; skipping JSON for ${locale}. Install WP-CLI to regenerate."
 		return 0
 	fi
 	wp i18n make-json "$LANG_DIR" --no-purge --pretty-print 1>/dev/null

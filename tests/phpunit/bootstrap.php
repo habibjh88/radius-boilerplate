@@ -3,10 +3,14 @@
  * PHPUnit bootstrap.
  *
  * Loads the WordPress test library from wp-phpunit and activates this plugin
- * before the suite runs. Intended to be executed inside wp-env:
+ * before the suite runs.
  *
- *   npm run env:start
+ * Requires a WordPress checkout and a throwaway MySQL database; point
+ * WP_CORE_DIR and the WP_TESTS_DB_* variables at them, then:
+ *
  *   npm run test:php
+ *
+ * See tests/phpunit/wp-config.php for the full list of variables.
  *
  * @package RadiusTheme\RadiusBoilerplate
  */

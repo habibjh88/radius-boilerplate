@@ -26,7 +26,7 @@ delete the example and keep the framework.
 * Gutenberg block, Elementor widget and shortcode, all rendering the same template
 * Email system with merge tags and overridable templates
 * Three-layer i18n setup that survives content-hashed bundle filenames
-* PHPCS, PHPUnit, Playwright and wp-env preconfigured
+* PHPCS and PHPUnit preconfigured
 
 == Installation ==
 
@@ -38,6 +38,9 @@ delete the example and keep the framework.
 See README.md for how to rename the boilerplate for a new project.
 
 == Changelog ==
+
+= 1.0.0.1 ( UNRELEASE ) =
+Removed the wp-env Docker environment and Playwright end-to-end tests; PHPUnit now runs directly.
 
 = 1.0.0 =
 Initial release.

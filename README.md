@@ -29,9 +29,7 @@ Dashboard, Items and Settings screens.
 | `npm run build` | Production bundles + `*.asset.php` dependency files. |
 | `npm run lint:js` / `npm run format` | ESLint / Prettier, via wp-scripts. |
 | `composer phpcs` / `composer phpcs:fix` | WordPress coding standards. |
-| `npm run env:start` | Start the wp-env Docker environment. |
-| `npm run test:php` | PHPUnit inside wp-env. |
-| `npm run test:e2e` | Playwright end-to-end tests. |
+| `npm run test:php` | PHPUnit — see Testing below for the required env vars. |
 | `npm run package` | Build a distributable zip. |
 | `npm run i18n:pot` | Regenerate `languages/radius-boilerplate.pot`. |
 
@@ -246,17 +244,30 @@ can't bypass the gate.
 
 ## Testing
 
+PHPUnit runs against a WordPress checkout and a throwaway MySQL database. There
+is no containerised environment — point the suite at whatever local stack you
+already use:
+
 ```bash
-npm run env:start
+export WP_CORE_DIR="$HOME/wordpress"     # any WordPress checkout
+export WP_TESTS_DB_NAME=wordpress_test   # DROPPED and recreated on every run
+export WP_TESTS_DB_USER=root
+export WP_TESTS_DB_PASSWORD=
+export WP_TESTS_DB_HOST=127.0.0.1
+
 npm run test:php      # PHPUnit — tests/phpunit/
-npm run test:e2e      # Playwright — tests/e2e/
 ```
 
-`tests/phpunit/TestItemCrud.php` and `tests/e2e/specs/items.smoke.spec.ts` are
-the reference tests; copy them for your own resources.
+Those variables are read by `tests/phpunit/wp-config.php`, which
+`phpunit.xml.dist` loads. The test database is wiped on every run, so never
+aim it at one you care about.
 
-The e2e seed helper sets a `Referer` header on every REST call, because
-`PermissionMiddleware` rejects requests whose referer isn't the site URL.
+`tests/phpunit/TestItemCrud.php` is the reference test; copy it for your own
+resources.
+
+When you write tests that call the REST API, remember that
+`PermissionMiddleware` rejects requests whose `Referer` isn't the site URL —
+set that header, or the request comes back 403 "Invalid request source".
 
 ---
 

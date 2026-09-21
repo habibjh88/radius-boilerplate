@@ -20,13 +20,10 @@ composer phpcs           # Check all files against WordPress coding standards
 composer phpcs:fix       # Auto-fix
 ./vendor/bin/phpcs --standard=phpcs.xml includes/path/to/File.php  # Lint one file
 
-# Testing (requires wp-env Docker)
-npm run env:start
-npm run test:php         # PHPUnit inside wp-env
-npm run test:e2e         # Playwright
-npm run test:e2e:ui      # Playwright with the visual UI
+# Testing (needs WP_CORE_DIR + a throwaway MySQL database — see README)
+npm run test:php         # PHPUnit, tests/phpunit/
 
-# WP-CLI scaffolding (inside wp-env or any WP-CLI environment)
+# WP-CLI scaffolding (any WP-CLI environment)
 wp radius-boilerplate artisan make:model ModelName
 wp radius-boilerplate artisan make:controller ControllerName
 wp radius-boilerplate artisan make:service ServiceName
